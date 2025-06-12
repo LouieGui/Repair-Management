@@ -16,8 +16,9 @@
                 <strong>Date:</strong> <span id="current-date">{{ now()->setTimezone('Asia/Manila')->format('Y-m-d') }}</span>
             </span>
             <span class="text-m italic">
-                <strong>Time:</strong> <span id="current-time">{{ now()->setTimezone('Asia/Manila')->format('h:i A') }}</span>
+                <strong>Time:</strong> <span id="current-time"></span>
             </span>
+
         </div>
     </div>
 
@@ -232,6 +233,23 @@
     </form>
 
     <script>
+        // Function to update date and time in Manila timezone
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                timeZone: 'Asia/Manila'
+            };
+            const timeString = now.toLocaleTimeString('en-US', options);
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        updateTime(); // initial call
+        setInterval(updateTime, 1000);
+
         // Update the current time every second
         function addPartRow() {
             const nameInput = document.getElementById('input-part-name');
