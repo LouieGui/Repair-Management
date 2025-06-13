@@ -18,40 +18,111 @@
         <div class="flex items-center space-x-6">
             <button id="add-tech-btn" class="bg-[#25b4b2] text-white px-4 py-2 rounded hover:bg-[#1e908f] transition">+ Add Technician</button>
         </div>
-    </div>
+        </div>
 
-    <!-- Add Technician Modal -->
-    <div id="add-tech-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity duration-200 hidden">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative border border-gray-200">
-            <!-- X Button -->
-            <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold" onclick="closeAddTechModal()">&times;</button>
-            <h2 class="text-2xl font-bold text-[#25b4b2] mb-6">Add Technician</h2>
-            <form>
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1" for="tech-name">Name</label>
-                    <input id="tech-name" name="name" type="text" class="border border-gray-300 rounded-lg px-3 py-2 w-full bg-gray-50 text-gray-800" required>
+        <!-- PIN Modal -->
+        <div id="pin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity duration-200 hidden">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xs p-8 relative border border-gray-200">
+            <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold" onclick="closePinModal()">&times;</button>
+            <h2 class="text-xl font-bold text-[#25b4b2] mb-4">Enter 4-digit PIN</h2>
+            <form id="pin-form">
+                <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg mb-4">
+                <div class="flex gap-x-5" data-hs-pin-input="">
+                    <input class="block size-9.5 text-center border-gray-200 rounded-md sm:text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="○" data-hs-pin-input-item="" id="pin-input-1" autocomplete="off">
+                    <input class="block size-9.5 text-center border-gray-200 rounded-md sm:text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="○" data-hs-pin-input-item="" id="pin-input-2" autocomplete="off">
+                    <input class="block size-9.5 text-center border-gray-200 rounded-md sm:text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="○" data-hs-pin-input-item="" id="pin-input-3" autocomplete="off">
+                    <input class="block size-9.5 text-center border-gray-200 rounded-md sm:text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="○" data-hs-pin-input-item="" id="pin-input-4" autocomplete="off">
                 </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1" for="tech-company">Company</label>
-                    <input id="tech-company" name="company" type="text" class="border border-gray-300 rounded-lg px-3 py-2 w-full bg-gray-50 text-gray-800" required>
                 </div>
                 <div class="flex justify-end gap-3">
-                    <button type="button" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition" onclick="closeAddTechModal()">Cancel</button>
-                    <button type="submit" class="px-4 py-2 rounded bg-[#25b4b2] text-white hover:bg-[#1e908f] transition">Save</button>
+                <button type="button" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition" onclick="closePinModal()">Cancel</button>
+                <button type="submit" class="px-4 py-2 rounded bg-[#25b4b2] text-white hover:bg-[#1e908f] transition">Submit</button>
                 </div>
             </form>
+            </div>
         </div>
-    </div>
-    <script>
-        // Show modal when "+ Add Technician" is clicked
-        document.getElementById('add-tech-btn').addEventListener('click', function() {
-            document.getElementById('add-tech-modal').classList.remove('hidden');
-        });
+        <!-- Add Technician Modal -->
+        <div id="add-tech-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity duration-200 hidden">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative border border-gray-200">
+            <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold" onclick="closeAddTechModal()">&times;</button>
+            <h2 class="text-2xl font-bold text-[#25b4b2] mb-6">Add Technician</h2>
+            <form id="add-tech-form">
+                <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-1" for="tech-name">Name</label>
+                <input id="tech-name" name="name" type="text" class="border border-gray-300 rounded-lg px-3 py-2 w-full bg-gray-50 text-gray-800" required>
+                </div>
+                <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-700 mb-1" for="tech-company">Company</label>
+                <input id="tech-company" name="company" type="text" class="border border-gray-300 rounded-lg px-3 py-2 w-full bg-gray-50 text-gray-800" required>
+                </div>
+                <div class="flex justify-end gap-3">
+                <button type="button" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition" onclick="closeAddTechModal()">Cancel</button>
+                <button type="submit" class="px-4 py-2 rounded bg-[#25b4b2] text-white hover:bg-[#1e908f] transition">Save</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        <script>
+            // PIN input focus/auto-advance logic
+            document.querySelectorAll('[data-hs-pin-input-item]').forEach((input, idx, arr) => {
+            input.addEventListener('input', function(e) {
+                if (this.value.length === 1 && idx < arr.length - 1) {
+                arr[idx + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value === '' && idx > 0) {
+                arr[idx - 1].focus();
+                }
+            });
+            });
 
-        function closeAddTechModal() {
+            // Show PIN modal when "+ Add Technician" is clicked
+            document.getElementById('add-tech-btn').addEventListener('click', function() {
+            document.getElementById('pin-modal').classList.remove('hidden');
+            setTimeout(function() {
+                document.getElementById('pin-input-1').focus();
+            }, 100);
+            });
+
+            function closePinModal() {
+            document.getElementById('pin-modal').classList.add('hidden');
+            document.querySelectorAll('[data-hs-pin-input-item]').forEach(input => input.value = '');
+            }
+
+            function closeAddTechModal() {
             document.getElementById('add-tech-modal').classList.add('hidden');
-        }
-    </script>
+            document.getElementById('add-tech-form').reset();
+            }
+
+            // PIN form logic
+            document.getElementById('pin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pin = [
+                document.getElementById('pin-input-1').value,
+                document.getElementById('pin-input-2').value,
+                document.getElementById('pin-input-3').value,
+                document.getElementById('pin-input-4').value
+            ].join('');
+            if (pin === '1112') {
+                closePinModal();
+                document.getElementById('add-tech-modal').classList.remove('hidden');
+            } else {
+                alert('Incorrect PIN. Please try again.');
+                document.querySelectorAll('[data-hs-pin-input-item]').forEach(input => input.value = '');
+                document.getElementById('pin-input-1').focus();
+            }
+            });
+
+            // Add Technician form logic (example: just closes modal and resets form)
+            document.getElementById('add-tech-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would send data to backend via AJAX or form submit
+            // For now, just close modal and reset
+            closeAddTechModal();
+            alert('Technician added!');
+            });
+        </script>
 
     <!-- Tech Tabs -->
     <div class="border-b border-gray-200">
