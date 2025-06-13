@@ -57,47 +57,16 @@
                         Report
                     </a>
                 </li>
-
-                <!-- Accounts Dropdown -->
-                <li class="hs-accordion" id="accounts-accordion">
-                    <button type="button" class="hs-accordion-toggle flex w-full items-center gap-x-3 py-2 px-3 rounded-md hover:bg-gray-100" aria-controls="accounts-submenu" aria-expanded="false">
+                
+                <!-- Tech Progress -->
+                <li>
+                    <a href="{{ route('techProgress') }}" class="flex items-center gap-x-3 py-2 px-3 rounded-md font-medium {{ request()->routeIs('techProgress') ? 'bg-gray-100' : 'hover:bg-gray-100' }}">
                         <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="7" r="4" />
-                            <path d="M6 21v-2a6 6 0 0112 0v2" />
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 6v6l4 2" />
                         </svg>
-                        Accounts
-
-                        <svg class="hs-accordion-active:hidden ml-auto size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="m6 9 6 6 6-6" />
-                        </svg>
-                        <svg class="hs-accordion-active:block hidden ml-auto size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="m18 15-6-6-6 6" />
-                        </svg>
-                    </button>
-
-                    <div id="accounts-submenu" class="hs-accordion-content hidden overflow-hidden transition-[height] duration-300 pl-8">
-                        <ul class="pt-1 space-y-1">
-                            <li>
-                                <a href="{{ route('customer') }}" class="flex items-center gap-x-3 py-2 px-3 rounded-md font-medium {{ request()->routeIs('customer') ? 'bg-gray-100' : 'hover:bg-gray-100' }}">
-                                    <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="7" r="4" />
-                                        <path d="M6 21v-2a6 6 0 0112 0v2" />
-                                    </svg>
-                                    Customer
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('technician') }}" class="flex items-center gap-x-3 py-2 px-3 rounded-md font-medium {{ request()->routeIs('technician') ? 'bg-gray-100' : 'hover:bg-gray-100' }}">
-                                    <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="7" r="4" />
-                                        <path d="M6 21v-2a6 6 0 0112 0v2" />
-                                        <path d="M17 21v-2a4 4 0 00-4-4h-2" />
-                                    </svg>
-                                    Technician
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                        Technician Progress
+                    </a>
                 </li>
 
                 <hr class="my-3 border-gray-500">
