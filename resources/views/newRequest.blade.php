@@ -193,10 +193,10 @@
 
                         <!-- Fixed Form Row -->
                         <div class="flex items-center gap-2 mb-3">
-                            <input type="text" id="input-part-name" class="border rounded-md px-3 py-2 w-1/2" placeholder="Part Name" />
+                            <input type="text" id="input-part-name" class="border rounded-md px-3 py-2 w-1/2" placeholder="Part Name" required />
                             <div class="relative w-1/4">
                                 <span class="absolute left-2 top-2.5 text-gray-500">₱</span>
-                                <input type="number" id="input-part-price" class="border rounded-md pl-6 pr-3 py-2 w-full text-right" placeholder="0.00" min="0" step="0.01" />
+                                <input type="number" id="input-part-price" class="border rounded-md pl-6 pr-3 py-2 w-full text-right" placeholder="0.00" min="0" step="0.01" required/>
                             </div>
                             <button type="button" onclick="addPartRow()" class="inline-flex items-center px-3 py-2 bg-[#25b4b2] text-white text-sm rounded-md hover:bg-[#b8cfce] transition flex-1 justify-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
