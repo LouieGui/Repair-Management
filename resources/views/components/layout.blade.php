@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gray-100">
-    
+
     <!-- Main Layout: Sidebar + Content -->
     <div class="flex min-h-screen">
         <!-- Side Bar) -->
@@ -26,7 +26,10 @@
             </div>
         </div>
     </div>
-    
+
+    <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="./assets/vendor/datatables.net/js/dataTables.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 
 </html>

@@ -12,3 +12,7 @@ Route::get('/repair-status', [StatusController::class, 'index'])->name('status')
 Route::get('/new-request', [RequestController::class, 'index'])->name('request');
 Route::get('/report', [ReportController::class, 'index'])->name('report');
 Route::get('/tech-progress', [ProgressController::class, 'index'])->name('techProgress');
+
+//Technician Progress Routes 
+Route::post('/tech-progress/add', [ProgressController::class, 'addTech'])->name('progressAdd');
+Route::delete('/tech-progress/{tech_id}/delete', [ProgressController::class, 'deleteTech'])->name('progressDelete');

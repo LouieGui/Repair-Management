@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Progress extends Model
 {
    protected $table = 'technician';
-   protected $primaryKey = 'id';
+   protected $primaryKey = 'tech_id';
    public $timestamps = false;
 
    protected $fillable = ['tech_name', 'company'];
