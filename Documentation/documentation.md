@@ -262,40 +262,88 @@ CREATE TABLE audit_trails (
 
 ## 🎯 Laravel Model Setup:
 
-### Base Model Trait (app/Traits/HasCommonFields.php)
+### User Model (app/Models/User.php)
 ```php
-namespace App\Traits;
+namespace App\Models;
 
-trait HasCommonFields
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class User extends Authenticatable
 {
+    use HasFactory, Notifiable, SoftDeletes;
+
+    protected $fillable = [
+        'username',
+        'email',
+        'phone',
+        'role',
+        'password',
+        'is_active',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'is_active' => 'boolean',
+            'role' => 'string',
+        ];
+    }
+
+    // Custom scopes and methods
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
     }
-    
+
     public function scopeInactive($query)
     {
         return $query->where('is_active', false);
     }
-    
+
     public function scopeNotDeleted($query)
     {
         return $query->whereNull('deleted_at');
     }
-    
+
     public function softDelete()
     {
         $this->update(['deleted_at' => now()]);
     }
-    
+
     public function restore()
     {
         $this->update(['deleted_at' => null]);
     }
-    
+
     public function toggleActive()
     {
         $this->update(['is_active' => !$this->is_active]);
+    }
+
+    // Relationships
+    public function technicianRepairs()
+    {
+        return $this->hasMany(Repair::class, 'technician_id');
+    }
+
+    public function receivedReturns()
+    {
+        return $this->hasMany(ReturnModel::class, 'received_by');
+    }
+
+    public function auditTrails()
+    {
+        return $this->hasMany(AuditTrail::class, 'user_id');
     }
 }
 ```
@@ -306,12 +354,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasCommonFields;
 
 class Repair extends Model
 {
-    use SoftDeletes, HasCommonFields;
-    
+    use SoftDeletes;
+
     protected $fillable = [
         'customer_id',
         'device_id',
@@ -329,7 +376,7 @@ class Repair extends Model
         'paid_amount',
         'is_active'
     ];
-    
+
     protected $casts = [
         'is_active' => 'boolean',
         'date_received' => 'date',
@@ -339,32 +386,32 @@ class Repair extends Model
         'total_amount' => 'decimal:2',
         'paid_amount' => 'decimal:2',
     ];
-    
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
-    
+
     public function device()
     {
         return $this->belongsTo(Device::class);
     }
-    
+
     public function technician()
     {
         return $this->belongsTo(User::class, 'technician_id');
     }
-    
+
     public function parts()
     {
         return $this->hasMany(RepairPart::class);
     }
-    
+
     public function payments()
     {
         return $this->hasMany(Payment::class);
     }
-    
+
     public function statusHistory()
     {
         return $this->hasMany(RepairStatusHistory::class);
