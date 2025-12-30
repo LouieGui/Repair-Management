@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\RepairController;
 use App\Http\Controllers\Api\V1\ReturnController;
 use App\Http\Controllers\Api\V1\PartController;
 use App\Http\Controllers\Api\V1\RepairPartController;
+use App\Http\Controllers\Api\V1\PaymentController;
 
 // API Version 1 Routes
 Route::prefix('v1')->group(function () {
@@ -74,4 +75,21 @@ Route::prefix('v1')->group(function () {
     Route::post('repair-parts/calculate-total', [RepairPartController::class, 'calculateTotal']);
     Route::post('repairs/{repair}/quotation', [RepairPartController::class, 'createQuotation']);
     Route::post('repairs/{repair}/approve-quotation', [RepairPartController::class, 'approveQuotation']);
+
+    // Payment resource routes
+    Route::apiResource('payments', PaymentController::class)->except(['destroy']);
+    Route::delete('payments/{payment}', [PaymentController::class, 'destroy']);
+
+    // Additional payment routes
+    Route::put('payments/{payment}/active', [PaymentController::class, 'toggleActive']);
+    Route::get('repairs/{repair}/payments', [PaymentController::class, 'getByRepair']);
+    Route::get('payments/status/{status}', [PaymentController::class, 'getByStatus']);
+    Route::get('payments/method/{paymentMethod}', [PaymentController::class, 'getByMethod']);
+    Route::get('payments/successful', [PaymentController::class, 'getSuccessful']);
+    Route::get('payments/failed', [PaymentController::class, 'getFailed']);
+    Route::get('payments/pending', [PaymentController::class, 'getPending']);
+    Route::post('payments/process', [PaymentController::class, 'processPayment']);
+    Route::post('payments/{payment}/refund', [PaymentController::class, 'refundPayment']);
+    Route::get('payments/statistics', [PaymentController::class, 'getStatistics']);
+    Route::get('payments/revenue/{status?}', [PaymentController::class, 'calculateRevenue']);
 });
