@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\RepairController;
 use App\Http\Controllers\Api\V1\ReturnController;
 use App\Http\Controllers\Api\V1\PartController;
+use App\Http\Controllers\Api\V1\RepairPartController;
 
 // API Version 1 Routes
 Route::prefix('v1')->group(function () {
@@ -57,4 +58,20 @@ Route::prefix('v1')->group(function () {
     Route::put('parts/{part}/add-stock/{quantity}', [PartController::class, 'addStock']);
     Route::put('parts/{part}/subtract-stock/{quantity}', [PartController::class, 'subtractStock']);
     Route::post('parts/bulk-import', [PartController::class, 'bulkImport']);
+
+    // Repair Part resource routes
+    Route::apiResource('repair-parts', RepairPartController::class)->except(['destroy']);
+    Route::delete('repair-parts/{repairPart}', [RepairPartController::class, 'destroy']);
+
+    // Additional repair part routes
+    Route::put('repair-parts/{repairPart}/active', [RepairPartController::class, 'toggleActive']);
+    Route::get('repairs/{repair}/parts', [RepairPartController::class, 'getByRepair']);
+    Route::get('parts/{part}/repairs', [RepairPartController::class, 'getByPart']);
+    Route::get('repair-parts/approved', [RepairPartController::class, 'getApproved']);
+    Route::get('repair-parts/pending', [RepairPartController::class, 'getPending']);
+    Route::put('repair-parts/approve', [RepairPartController::class, 'approve']);
+    Route::put('repair-parts/reject', [RepairPartController::class, 'reject']);
+    Route::post('repair-parts/calculate-total', [RepairPartController::class, 'calculateTotal']);
+    Route::post('repairs/{repair}/quotation', [RepairPartController::class, 'createQuotation']);
+    Route::post('repairs/{repair}/approve-quotation', [RepairPartController::class, 'approveQuotation']);
 });
