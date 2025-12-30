@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\ReturnController;
 use App\Http\Controllers\Api\V1\PartController;
 use App\Http\Controllers\Api\V1\RepairPartController;
 use App\Http\Controllers\Api\V1\PaymentController;
+use App\Http\Controllers\Api\V1\AuditTrailController;
 
 // API Version 1 Routes
 Route::prefix('v1')->group(function () {
@@ -92,4 +93,18 @@ Route::prefix('v1')->group(function () {
     Route::post('payments/{payment}/refund', [PaymentController::class, 'refundPayment']);
     Route::get('payments/statistics', [PaymentController::class, 'getStatistics']);
     Route::get('payments/revenue/{status?}', [PaymentController::class, 'calculateRevenue']);
+
+    // Audit Trail resource routes
+    Route::apiResource('audit-trails', AuditTrailController::class)->except(['show', 'update', 'destroy']);
+    Route::post('audit-trails', [AuditTrailController::class, 'store']);
+
+    // Additional audit trail routes
+    Route::get('users/{user}/audit-trails', [AuditTrailController::class, 'getByUser']);
+    Route::get('audit-trails/user-type/{userType}', [AuditTrailController::class, 'getByUserType']);
+    Route::get('audit-trails/table/{tableName}', [AuditTrailController::class, 'getByTable']);
+    Route::get('audit-trails/event/{event}', [AuditTrailController::class, 'getByEvent']);
+    Route::get('audit-trails/date-range/{startDate}/{endDate}', [AuditTrailController::class, 'getByDateRange']);
+    Route::get('audit-trails/recent/{limit?}', [AuditTrailController::class, 'getRecent']);
+    Route::get('audit-trails/statistics', [AuditTrailController::class, 'getStatistics']);
+    Route::delete('audit-trails/clear/{cutoffDate}', [AuditTrailController::class, 'clearOldAuditTrails']);
 });
