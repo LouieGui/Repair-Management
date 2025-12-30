@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\CustomerController;
 use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\RepairController;
 use App\Http\Controllers\Api\V1\ReturnController;
+use App\Http\Controllers\Api\V1\PartController;
 
 // API Version 1 Routes
 Route::prefix('v1')->group(function () {
@@ -43,4 +44,17 @@ Route::prefix('v1')->group(function () {
     Route::get('returns/type/{returnType}', [ReturnController::class, 'getByType']);
     Route::get('returns/warranty/{isUnderWarranty}', [ReturnController::class, 'getByWarrantyStatus']);
     Route::post('returns/warranty-claim', [ReturnController::class, 'processWarrantyClaim']);
+
+    // Part resource routes
+    Route::apiResource('parts', PartController::class)->except(['destroy']);
+    Route::delete('parts/{part}', [PartController::class, 'destroy']);
+
+    // Additional part routes
+    Route::put('parts/{part}/active', [PartController::class, 'toggleActive']);
+    Route::get('parts/search/{searchTerm}', [PartController::class, 'searchByName']);
+    Route::get('parts/sku/{sku}', [PartController::class, 'findBySku']);
+    Route::get('parts/low-stock/{threshold?}', [PartController::class, 'getLowStockParts']);
+    Route::put('parts/{part}/add-stock/{quantity}', [PartController::class, 'addStock']);
+    Route::put('parts/{part}/subtract-stock/{quantity}', [PartController::class, 'subtractStock']);
+    Route::post('parts/bulk-import', [PartController::class, 'bulkImport']);
 });
