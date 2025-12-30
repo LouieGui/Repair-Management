@@ -929,3 +929,120 @@ revert   – Revert a previous commit
 ```
 
 ---
+
+## 📖 Backend Implementation Standards
+
+### Industry Standard Naming Conventions
+
+#### Endpoints
+- **Format**: Plural nouns (e.g., `/users`, `/customers`)
+- **HTTP Methods**: Standard RESTful methods
+  - `GET` - Retrieve resources
+  - `POST` - Create resources
+  - `PUT/PATCH` - Update resources
+  - `DELETE` - Soft delete resources
+
+#### Component Naming
+- **Controllers**: Singular + `Controller` (e.g., `UserController`)
+- **Services**: Singular + `Service` (e.g., `UserService`)
+- **Repositories**: Singular + `Repository` (e.g., `UserRepository`)
+- **Requests**: Action + Model + `Request` (e.g., `StoreUserRequest`, `UpdateUserRequest`)
+- **Resources**: Singular + `Resource` (e.g., `UserResource`)
+
+### Documentation Standards
+
+All functions must include comprehensive documentation following this format:
+
+```php
+/**
+ * Short one-line summary of what the function does.
+ * Optional longer description if the logic is not obvious.
+ * @param  type  $paramName  Description
+ * @return type  Description
+ */
+```
+
+#### Example Documentation
+
+```php
+/**
+ * Create a new user with business logic.
+ *
+ * Automatically hashes password and sets default values.
+ *
+ * @param  array  $data  User data
+ * @return User  Created user
+ */
+public function createUser(array $data): User
+{
+    // Function implementation
+}
+```
+
+### Soft Delete Implementation
+
+Instead of physical deletion, use soft delete via `is_active` field:
+
+```php
+/**
+ * Toggle user active status (soft delete/restore).
+ *
+ * @param  int  $userId  User ID to toggle
+ * @return User  Updated user
+ */
+public function toggleUserActiveStatus(int $userId): User
+{
+    $user = $this->userRepository->findById($userId);
+    return $this->userRepository->toggleActiveStatus($user);
+}
+```
+
+### API Response Standards
+
+- **Success Responses**: Use HTTP status codes appropriately
+  - `200 OK` - Successful GET requests
+  - `201 Created` - Successful POST requests
+  - `204 No Content` - Successful DELETE requests
+- **Error Responses**: Use standard error formats
+- **Resource Formatting**: Use API Resources for consistent response structure
+
+### Versioning Strategy
+
+- **API Versioning**: Use URL prefix (e.g., `/api/v1/users`)
+- **Route Definition**:
+  ```php
+  Route::prefix('v1')->group(function () {
+      Route::apiResource('users', UserController::class);
+  });
+  ```
+
+### Security Standards
+
+- **Password Handling**: Always hash passwords using Laravel's `Hash` facade
+- **Validation**: Use Form Requests for centralized validation
+- **Authentication**: Implement proper authentication middleware
+
+### Code Organization
+
+```
+app/
+├── Http/
+│   ├── Controllers/Api/V1/      # Versioned API controllers
+│   ├── Requests/                # Validation requests
+│   └── Resources/               # API resources
+├── Models/                      # Eloquent models
+├── Services/                    # Business logic
+├── Repositories/                # Database access
+└── Enums/                       # Status enums
+```
+
+### Best Practices
+
+1. **Separation of Concerns**: Each layer has one responsibility
+2. **Thin Controllers**: Business logic belongs in Services
+3. **Dependency Injection**: Use constructor injection for dependencies
+4. **Type Hinting**: Use proper type hints and return types
+5. **Error Handling**: Implement proper error handling and logging
+6. **Testing**: Write unit tests for Services and Repositories
+
+---
