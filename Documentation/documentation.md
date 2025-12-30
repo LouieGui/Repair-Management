@@ -1046,3 +1046,83 @@ app/
 6. **Testing**: Write unit tests for Services and Repositories
 
 ---
+
+## 📝 Pull Request Structure Guide
+
+### PR Description Format
+
+Use the following structure for all pull requests:
+
+```markdown
+__WHAT:__
+This PR [brief description of what this PR does]
+
+- [Bullet point 1]
+- [Bullet point 2]
+- [Bullet point 3]
+
+__WHY:__
+
+- [Reason 1]
+- [Reason 2]
+- [Reason 3]
+
+__HOW:__
+
+- Created `CustomerRepository.php` - Database operations with soft delete
+- Updated `routes/api.php` with versioned customer resource routing
+- Enhanced `documentation.md` with customer-specific implementation notes
+
+```
+## 🎯 Branch Strategy Update
+
+**Important Note**: All new feature branches should be based on the `development` branch, not `main`.
+
+### Correct Branch Creation Process
+
+```bash
+# Always start from development branch
+git checkout development
+
+# Pull latest changes
+git pull origin development
+
+# Create new feature branch
+git checkout -b feature/<your-feature-name>
+```
+
+### Why This Matters
+
+- Ensures you have the latest updates and bug fixes
+- Prevents merge conflicts with main branch
+- Follows proper Git flow methodology
+- Maintains stable main branch for production
+
+### Common Mistakes to Avoid
+
+❌ Creating branches from outdated development - Always pull first
+
+✅ `git checkout development && git pull && git checkout -b feature/xyz` - Always update first
+
+---
+
+## 📚 Additional Resources
+
+### Laravel Documentation
+- [Laravel Official Docs](https://laravel.com/docs)
+- [Laravel API Resources](https://laravel.com/docs/eloquent-resources)
+- [Laravel Validation](https://laravel.com/docs/validation)
+
+### Best Practices
+- [Laravel Best Practices](https://github.com/alexeymezenin/laravel-best-practices)
+- [RESTful API Design](https://restfulapi.net/)
+- [PHP Documentation Standards](https://www.php-fig.org/psr/psr-12/)
+
+### Tools
+- [Postman for API Testing](https://www.postman.com/)
+- [Laravel Telescope](https://laravel.com/docs/telescope)
+- [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
+
+---
+
+**End of Documentation**
