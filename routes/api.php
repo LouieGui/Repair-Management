@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\CustomerController;
 use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\RepairController;
+use App\Http\Controllers\Api\V1\ReturnController;
 
 // API Version 1 Routes
 Route::prefix('v1')->group(function () {
@@ -31,4 +32,15 @@ Route::prefix('v1')->group(function () {
     Route::get('devices/{device}/repairs', [RepairController::class, 'findByDevice']);
     Route::get('technicians/{technician}/repairs', [RepairController::class, 'findByTechnician']);
     Route::get('repairs/status/{status}', [RepairController::class, 'findByStatus']);
+
+    // Return resource routes
+    Route::apiResource('returns', ReturnController::class)->except(['destroy']);
+    Route::delete('returns/{return}', [ReturnController::class, 'destroy']);
+
+    // Additional return routes
+    Route::put('returns/{return}/active', [ReturnController::class, 'toggleActive']);
+    Route::get('repairs/{repair}/returns', [ReturnController::class, 'getByRepair']);
+    Route::get('returns/type/{returnType}', [ReturnController::class, 'getByType']);
+    Route::get('returns/warranty/{isUnderWarranty}', [ReturnController::class, 'getByWarrantyStatus']);
+    Route::post('returns/warranty-claim', [ReturnController::class, 'processWarrantyClaim']);
 });
